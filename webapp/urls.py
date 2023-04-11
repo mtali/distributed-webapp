@@ -8,6 +8,8 @@ from sales.api.views import MembershipListApiView
 from staffs.api.views import StaffsListApiView
 from . import views
 
+admin.site.site_header = "WebApp Admin"
+
 urlpatterns = [
     path('api/v1/memberships/', MembershipListApiView.as_view(), name='memberships-list'),
     path('api/v1/customers/', CustomersListApiView.as_view(), name='customers-list'),
