@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 
 from customers.models import Customer
+from packs.models import Pack
 
 
 class Membership(models.Model):
@@ -29,8 +30,8 @@ class Transaction(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    pack_in = models.CharField(max_length=20, blank=True, null=True)
-    pack_out = models.CharField(max_length=20, blank=True, null=True)
+    pack_in = models.ForeignKey(Pack, on_delete=models.CASCADE, related_name="transactions_in", blank=True, null=True)
+    pack_out = models.ForeignKey(Pack, on_delete=models.CASCADE, related_name="transactions_out", blank=True, null=True)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     duration_in_days = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -3,6 +3,7 @@ from django.urls import path, include
 
 from customers.api.views import CustomersListApiView
 from hubs.api.views import DeviceInfoApiView
+from packs.api.views import PacksListApiView
 from sales.api.views import MembershipListApiView
 from staffs.api.views import StaffsListApiView
 from . import views
@@ -12,6 +13,7 @@ urlpatterns = [
     path('api/v1/customers/', CustomersListApiView.as_view(), name='customers-list'),
     path('api/v1/device_info/', DeviceInfoApiView.as_view(), name='device-info'),
     path('api/v1/staffs/', StaffsListApiView.as_view(), name='staff-list'),
+    path('api/v1/packs/', PacksListApiView.as_view(), name='pack-list'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/docs', views.APIRootView.as_view()),
     path('', admin.site.urls),
