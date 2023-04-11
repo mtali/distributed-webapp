@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(blank=True, max_length=254, verbose_name='email address')),
                 ('is_staff', models.BooleanField(default=False,
                                                  help_text='Designates whether the user can log into this admin site.',
-                                                 verbose_name='staff status')),
+                                                 verbose_name='staffs status')),
                 ('is_active', models.BooleanField(default=True,
                                                   help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.',
                                                   verbose_name='active')),
