@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-cwk+*!bzo&b%8i0#8ox%is^mc*_g4h%z&f$8ghnpl$+#bnpp_%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'packs',
     'sales',
     'staffs',
+    'webhooks'
 ]
 
 MIDDLEWARE = [

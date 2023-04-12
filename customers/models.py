@@ -26,6 +26,9 @@ class Customer(models.Model):
 
     hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
 
+    def update_membership(self, duration):
+        pass
+
     class Meta:
         db_table = 'customers'
 
