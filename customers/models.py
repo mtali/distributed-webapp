@@ -1,4 +1,5 @@
 import uuid
+from datetime import date, timedelta
 
 from django.db import models
 
@@ -27,7 +28,12 @@ class Customer(models.Model):
     hub = models.ForeignKey(Hub, on_delete=models.CASCADE)
 
     def update_membership(self, duration):
-        pass
+        today = date.today()
+        if not self.membership_expiry_date or self.membership_expiry_date <= today:
+            self.membership_expiry_date = today + timedelta(days=duration)
+        else:
+            self.membership_expiry_date += timedelta(days=duration)
+        self.save()
 
     class Meta:
         db_table = 'customers'

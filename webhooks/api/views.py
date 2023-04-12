@@ -52,7 +52,7 @@ class WebhookApiView(APIView):
             return Response({"status": "ok"})
         elif webhook_type == 'MembershipSale':
             customer = Customer.objects.get(id=data.get('customer_id'))
-            Transaction.objects.create(
+            Transaction.objects.get_or_create(
                 id=webhook.id,
                 customer=customer,
                 amount=data.get('payment_amount'),
@@ -95,7 +95,7 @@ class WebhookApiView(APIView):
             else:
                 pack_out = None
 
-            Transaction.objects.create(
+            Transaction.objects.get_or_create(
                 id=webhook.id,
                 customer=customer,
                 amount=0,
