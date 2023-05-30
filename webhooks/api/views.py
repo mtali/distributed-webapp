@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,12 +19,14 @@ class WebhookApiView(APIView):
         hub = Hub.objects.filter(device_id=device_id).first()
         root_data = request.data
         webhook_type = root_data.get('type')
+        aware_timestamp = datetime.fromtimestamp(int(root_data.get('timestamp')), tz=timezone.utc)
         webhook, created = Webhook.objects.update_or_create(
-            id=root_data.get('id'),
+            id=root_data.get('uid'),
             defaults={
+                'id': root_data.get('uid'),
                 'type': root_data.get('type'),
-                'payload': root_data.get('data'),
-                'timestamp': datetime.utcfromtimestamp(int(root_data.get('timestamp'))),
+                'payload': root_data,
+                'timestamp': aware_timestamp,
             }
         )
 
@@ -73,6 +75,7 @@ class WebhookApiView(APIView):
                 pack_in, _ = Pack.objects.update_or_create(
                     pack_id=data.get('pack_in'),
                     defaults={
+                        'pack_id': data.get('pack_in'),
                         'hub': hub,
                         'pack_status': 'AtHubUncharged',
                         'current_customer': None,
@@ -84,8 +87,9 @@ class WebhookApiView(APIView):
 
             if data.get('pack_out'):
                 pack_out, _ = Pack.objects.update_or_create(
-                    pack_id=data.get('pack_in'),
+                    pack_id=data.get('pack_out'),
                     defaults={
+                        'pack_id': data.get('pack_out'),
                         'hub': hub,
                         'pack_status': 'SignedOut',
                         'current_customer': customer,
