@@ -28,7 +28,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = 'django-insecure-cwk+*!bzo&b%8i0#8ox%is^mc*_g4h%z&f$8ghnpl$+#bnpp_%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,15 +90,7 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASE_URL = os.getenv("DATABASE_URL")
-if not DEBUG:
-    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800)}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
