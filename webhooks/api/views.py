@@ -1,5 +1,7 @@
+import uuid
 from datetime import datetime, timezone
 
+from django.utils import timezone as d_timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -111,3 +113,15 @@ class WebhookApiView(APIView):
             webhook.processed = True
             webhook.save()
             return Response({"status": "ok"})
+
+
+class HubApiView(APIView):
+    def post(self, request):
+        Webhook.objects.create(
+            id=str(uuid.uuid4()),
+            type="PackUpdate",
+            payload={"data": request.data},
+            timestamp=d_timezone.now(),
+            processed=False,
+        )
+        return Response({"status": "ok"})
