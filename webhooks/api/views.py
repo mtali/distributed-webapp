@@ -124,4 +124,4 @@ class HubApiView(APIView):
             timestamp=d_timezone.now(),
             processed=False,
         )
-        return Response({"status": "ok"})
+        return Response(data="success")
