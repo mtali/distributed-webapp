@@ -116,7 +116,12 @@ class WebhookApiView(APIView):
 
 
 class HubApiView(APIView):
-    def post(self, request):
+
+    def get(self, request, pack_id, status):
+        data = {
+            "pack_id": pack_id,
+            "status": status,
+        }
         Webhook.objects.create(
             id=str(uuid.uuid4()),
             type="PackUpdate",

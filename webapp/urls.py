@@ -18,7 +18,7 @@ urlpatterns = [
     path('api/v1/staffs/', StaffsListApiView.as_view(), name='staff-list'),
     path('api/v1/packs/', PacksListApiView.as_view(), name='pack-list'),
     path('api/v1/webhooks/', WebhookApiView.as_view(), name='webhooks'),
-    path('api/v1/pack_status/', HubApiView.as_view(), name="pack_status"),
+    path('api/v1/data/<str:pack_id>/<str:status>', HubApiView.as_view(), name="pack_status"),
     path('api-auth/', include('rest_framework.urls')),
     path('api/docs', views.APIRootView.as_view()),
     path('', admin.site.urls),
