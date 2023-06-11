@@ -126,7 +126,7 @@ class HubApiView(APIView):
         Webhook.objects.create(
             id=str(uuid.uuid4()),
             type="PackUpdate",
-            payload={"data": request.data},
+            payload={"data": data},
             timestamp=d_timezone.now(),
             processed=False,
         )
