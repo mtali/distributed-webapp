@@ -119,15 +119,28 @@ class WebhookApiView(APIView):
 class HubApiView(APIView):
 
     def get(self, request, pack_id, status):
-        data = {
-            "pack_id": pack_id,
-            "status": status,
-        }
+        pack_status = 'Charging'
+        if status == "full":
+            pack_status = 'AtHubCharged'
+
+        hub = Hub.objects.first()
+
+        Pack.objects.update_or_create(
+            pack_id=pack_id,
+            defaults={
+                'pack_id': pack_id,
+                'hub': hub,
+                'pack_status': pack_status,
+                'current_customer': None,
+                'is_active': True,
+            }
+        )
+
         Webhook.objects.create(
             id=str(uuid.uuid4()),
             type="PackUpdate",
-            payload={"data": data},
+            payload={"data": {"pack_id": pack_id, "status": pack_status}},
             timestamp=d_timezone.now(),
-            processed=False,
+            processed=True
         )
         return HttpResponse("success", content_type='text/plain')
