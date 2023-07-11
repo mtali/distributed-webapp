@@ -1,6 +1,5 @@
 import uuid
 from datetime import datetime, timezone
-
 from django.http import HttpResponse
 from django.utils import timezone as d_timezone
 from rest_framework.response import Response
@@ -120,8 +119,8 @@ class HubApiView(APIView):
 
     def get(self, request, pack_id, status):
         pack_status = 'Charging'
-        if status == "full":
-            pack_status = 'AtHubCharged'
+        # if status == "full":
+        #     pack_status = 'AtHubCharged'
 
         hub = Hub.objects.first()
 
